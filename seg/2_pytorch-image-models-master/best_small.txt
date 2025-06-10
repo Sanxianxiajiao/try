@@ -1,0 +1,2 @@
+2022-11-04 18:54:44,528 - mmseg - INFO - Best Architecture in evolution search: mIoU: 32.83 flops: 1.18 cfg: {'width': [16, 16, 16, 48, 96, 136], 'depth': [2, 2, 1, 3, 4], 'kernel_size': [5, 3, 5, 3, 3], 'expand_ratio': [1, 3, 3, 2, 6], 'num_heads': [6,
+4, 4, 8], 'key_dim': [16, 14, 16, 14], 'attn_ratio': [1.6, 1.8, 1.8, 1.8], 'mlp_ratio': [2.2, 1.8, 2.0, 1.8], 'transformer_depth': [2, 1, 2, 2]}

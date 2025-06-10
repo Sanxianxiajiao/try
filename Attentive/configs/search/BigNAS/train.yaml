@@ -1,0 +1,101 @@
+NUM_GPUS: 8
+RNG_SEED: 0
+SPACE:
+  NAME: 'bignas'
+LOADER:
+  DATASET: 'imagenet'
+  NUM_CLASSES: 1000
+  BATCH_SIZE: 160
+  NUM_WORKERS: 20
+  USE_VAL: True
+  TRANSFORM: "auto_augment_tf"
+OPTIM:
+  WARMUP_EPOCH: 5
+  MAX_EPOCH: 360
+  LR_POLICY: "step"
+  WEIGHT_DECAY: 1.e-5
+  ALPHA: 0.9
+  BASE_LR: 0.256 # batch size 4096 => BASE_LR 0.256
+  WARMUP_LR: 0.0256 # 0.01 * BASE_LR
+  NESTEROV: True
+SEARCH:
+  LOSS_FUN: "cross_entropy_smooth"
+  IM_SIZE: 224
+  LABEL_SMOOTH: 0.1
+TEST:
+  IM_SIZE: 224
+TRAIN:
+  DROP_PATH_PROB: 0.2
+BIGNAS:
+  SYNC_BN: True # sync-batchnormalization, suggested to use in bignas
+  SANDWICH_NUM: 4   # max + 2*middle + min
+  DROP_CONNECT: 0.2
+  BN_MOMENTUM: 0.
+  BN_EPS: 1.e-5
+  POST_BN_CALIBRATION_BATCH_NUM: 1600 # batch size 4096 => CALIBRATION_BATCH_NUM 64
+  SUPERNET_CFG:
+    use_v3_head: False
+    resolutions: [192, 224, 288, 320]
+    first_conv:
+      c: [32, 40]
+      act_func: 'swish'
+      s: 2
+    mb1:
+      c: [16, 24]
+      d: [1, 2]
+      k: [3]
+      t: [1]
+      s: 1
+      act_func: 'swish'
+      se: True
+    mb2:
+      c: [24, 32]
+      d: [2, 3]
+      k: [3]
+      t: [6]
+      s: 2
+      act_func: 'swish'
+      se: True
+    mb3:
+      c: [40, 48] 
+      d: [2, 3]
+      k: [3, 5]
+      t: [6]
+      s: 2
+      act_func: 'swish'
+      se: True
+    mb4:
+      c: [80, 88] 
+      d: [2, 3, 4]
+      k: [3, 5]
+      t: [6]
+      s: 2
+      act_func: 'swish'
+      se: True
+    mb5:
+      c: [112, 120, 128] 
+      d: [2, 3, 4, 5, 6]
+      k: [3, 5]
+      t: [6]
+      s: 1
+      act_func: 'swish'
+      se: True
+    mb6:
+      c: [192, 200, 208, 216] 
+      d: [2, 3, 4, 5, 6]
+      k: [3, 5]
+      t: [6]
+      s: 2
+      act_func: 'swish'
+      se: True
+    mb7:
+      c: [320, 352] 
+      d: [1, 2]
+      k: [3, 5]
+      t: [6]
+      s: 1
+      act_func: 'swish'
+      se: True
+    last_conv:
+      c: [1280, 1408]
+      act_func: 'swish'
